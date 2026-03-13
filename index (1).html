@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>💰 Quiz: Qual é o seu estilo com dinheiro?</title>
+
+<style>
+body{
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg,#0f3d2e,#0a2e4d);
+color:white;
+text-align:center;
+padding:30px;
+}
+
+.quiz-box{
+background:white;
+color:#333;
+max-width:500px;
+margin:auto;
+padding:25px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+h1{
+color:#0f5132;
+}
+
+.progress{
+margin-bottom:15px;
+font-weight:bold;
+color:#0a2e4d;
+}
+
+button{
+display:block;
+width:100%;
+margin:8px 0;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#1e7e34;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#155724;
+}
+
+.result{
+margin-top:20px;
+font-size:18px;
+font-weight:bold;
+}
+
+.gold{
+color:#c9a227;
+}
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<h1>💰 Quiz: Qual é o seu estilo com dinheiro?</h1>
+
+<p>🏦 Descubra como você lida com dinheiro respondendo 10 perguntas rápidas.</p>
+<p>📈 Escolha a alternativa que mais combina com você.</p>
+
+<div class="progress" id="progress">Pergunta 1/10</div>
+
+<h2 id="question"></h2>
+
+<div id="answers"></div>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+
+const questions = [
+{
+q:"Quando você recebe dinheiro:",
+a:["A) Já penso no que comprar","B) Compro algo e guardo um pouco","C) Guardo a maior parte","D) Nem lembro onde gastei"]
+},
+{
+q:"Quando vê uma promoção:",
+a:["A) Compro porque está barato","B) Penso se realmente preciso","C) Só compro se já planejava","D) Compro mesmo sem dinheiro"]
+},
+{
+q:"Seus amigos querem sair e gastar dinheiro:",
+a:["A) Vou sem pensar","B) Vou, mas controlo os gastos","C) Vou só se estiver no meu orçamento","D) Vou e depois vejo como pagar"]
+},
+{
+q:"Quando pensa no futuro:",
+a:["A) Não penso muito nisso","B) Penso às vezes","C) Tento planejar e economizar","D) Deixo para resolver depois"]
+},
+{
+q:"Quando quer comprar algo caro:",
+a:["A) Peço dinheiro ou parcelo","B) Junto dinheiro por um tempo","C) Planejo bem antes de comprar","D) Compro sem pensar muito"]
+},
+{
+q:"Se você tivesse R$500 agora:",
+a:["A) Compraria algo que quero","B) Usaria parte e guardaria o resto","C) Guardaria quase tudo","D) Gastaria em várias coisas"]
+},
+{
+q:"Como você se sente ao guardar dinheiro?",
+a:["A) Acho difícil","B) Consigo às vezes","C) Gosto de ver meu dinheiro crescer","D) Nem penso nisso"]
+},
+{
+q:"Quando recebe mesada ou salário:",
+a:["A) Acaba rápido","B) Dura um tempo","C) Consigo guardar uma parte","D) Nem sei como acabou"]
+},
+{
+q:"Você costuma anotar ou controlar gastos?",
+a:["A) Nunca","B) Às vezes","C) Sim, gosto de organizar","D) Nem sei quanto gasto"]
+},
+{
+q:"O que você faria com um dinheiro extra inesperado?",
+a:["A) Compraria algo na hora","B) Dividiria entre gastar e guardar","C) Guardaria ou investiria","D) Gastaria tudo"]
+}
+];
+
+let current = 0;
+let score = {A:0,B:0,C:0,D:0};
+
+function loadQuestion(){
+
+document.getElementById("progress").innerText="Pergunta "+(current+1)+"/10";
+document.getElementById("question").innerText=questions[current].q;
+
+const answersDiv=document.getElementById("answers");
+answersDiv.innerHTML="";
+
+questions[current].a.forEach(option=>{
+
+const btn=document.createElement("button");
+btn.innerText=option;
+
+btn.onclick=function(){
+
+const letter=option.charAt(0);
+score[letter]++;
+
+current++;
+
+if(current<questions.length){
+loadQuestion();
+}else{
+showResult();
+}
+
+};
+
+answersDiv.appendChild(btn);
+
+});
+
+}
+
+function showResult(){
+
+let profile="";
+
+if(score.A>=score.B && score.A>=score.C && score.A>=score.D){
+profile="🛍️ Gastador(a) Flash 💸<br>Você ama viver o momento! O dinheiro entra e sai rápido.";
+}
+else if(score.B>=score.A && score.B>=score.C && score.B>=score.D){
+profile="⚖️ Equilibrista Financeiro 💰<br>Você tenta equilibrar diversão e responsabilidade.";
+}
+else if(score.C>=score.A && score.C>=score.B && score.C>=score.D){
+profile="🧠 Mestre do Cofrinho 🏦<br>Você pensa no futuro e gosta de economizar.";
+}
+else{
+profile="🌪️ Turbilhão do Dinheiro 💸<br>O dinheiro passa pela sua mão e você nem vê para onde foi.";
+}
+
+document.getElementById("question").innerHTML="<span class='gold'>Resultado</span>";
+document.getElementById("answers").innerHTML="";
+document.getElementById("progress").innerHTML="📊 Quiz Finalizado";
+document.getElementById("result").innerHTML=profile;
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
